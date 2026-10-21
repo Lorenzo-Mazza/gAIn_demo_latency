@@ -2,31 +2,23 @@ const videos = [document.querySelector('#fp32-video'), document.querySelector('#
 const master = videos[0];
 const playButton = document.querySelector('#play-pause');
 const startButton = document.querySelector('#start-demo');
-const seekInput = document.querySelector('#seek');
-const playbackTime = document.querySelector('#playback-time');
+const gainCompletion = document.querySelector('#gain-completion');
 const chart = document.querySelector('#latency-chart');
 const tooltip = document.querySelector('#chart-tooltip');
 const errorMessage = document.querySelector('#error-message');
 const svgNS = 'http://www.w3.org/2000/svg';
 let playing = false;
 let ready = false;
-let duration = 45;
 let metric = 'inference';
 let latency;
 let media;
 let chartLayout;
 let inspectedStep = 1;
-let dragging = false;
 let playbackRequest = 0;
 
 function reportError(message) {
   errorMessage.textContent = message;
   errorMessage.hidden = false;
-}
-
-function formatTime(value) {
-  const seconds = Math.max(0, Math.floor(value || 0));
-  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
 function setPlaying(value) {
@@ -79,16 +71,14 @@ function updatePhases() {
 }
 
 function updatePlayback() {
-  const time = master.currentTime || 0;
-  if (!dragging) seekInput.value = time;
-  seekInput.style.setProperty('--progress', `${100 * time / duration}%`);
-  seekInput.setAttribute('aria-valuetext', `${formatTime(time)} of ${formatTime(duration)}`);
-  playbackTime.textContent = `${formatTime(time)} / ${formatTime(duration)}`;
   updatePhases();
+  const gain = videos[1];
+  const finished = Number.isFinite(gain.duration) && gain.currentTime >= gain.duration - .06 && (gain.ended || master.currentTime >= gain.duration);
+  gainCompletion.hidden = !finished;
 }
 
 function seekTo(time) {
-  const target = Math.max(0, Math.min(duration, time));
+  const target = Math.max(0, Math.min(master.duration, time));
   videos.forEach(video => {
     if (!Number.isFinite(video.duration)) return;
     video.currentTime = Math.min(target, Math.max(0, video.duration - 0.03));
@@ -116,13 +106,11 @@ function waitForMetadata(video) {
 playButton.addEventListener('click', () => playing ? pauseVideos() : playVideos());
 startButton.addEventListener('click', playVideos);
 document.querySelector('#restart').addEventListener('click', replay);
-seekInput.addEventListener('pointerdown', () => { dragging = true; });
-window.addEventListener('pointerup', () => { dragging = false; });
-seekInput.addEventListener('input', () => seekTo(Number(seekInput.value)));
 master.addEventListener('ended', replay);
 videos.forEach(video => {
   video.addEventListener('timeupdate', updatePlayback);
   video.addEventListener('seeked', updatePlayback);
+  video.addEventListener('ended', updatePlayback);
   video.addEventListener('error', () => reportError('A video could not be loaded. Please reload the demo.'));
 });
 
@@ -270,8 +258,6 @@ async function initialize() {
     await document.fonts.ready;
     drawChart();
     await Promise.all(videos.map(waitForMetadata));
-    duration = Math.max(...videos.map(video => video.duration));
-    seekInput.max = duration;
     ready = true;
     updatePlayback();
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {

@@ -27,6 +27,8 @@ try {
   assert.deepEqual(await page.locator('.latency-curve').evaluateAll(items => items.map(path => getComputedStyle(path).stroke)), ['rgb(124, 142, 133)', 'rgb(0, 132, 102)']);
   assert.equal(await page.locator('#latency-chart circle').count(), 0);
   assert.equal(await page.locator('#speedup').textContent(), '3.1×');
+  assert.equal(await page.locator('input[type="range"]').count(), 0, 'No progress bar');
+  assert.equal(await page.locator('#gain-completion').isVisible(), false);
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.playbackRate)), [1, 1]);
   const lengths = await page.locator('video').evaluateAll(items => items.map(video => video.duration));
   assert.ok(Math.abs(lengths[0] - 45) < .1, `FP32 duration ${lengths[0]}`);
@@ -35,19 +37,24 @@ try {
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.paused)), [true, true]);
 
   async function seek(seconds) {
-    await page.locator('#seek').evaluate((slider, value) => {
-      slider.value = value;
-      slider.dispatchEvent(new Event('input', {bubbles: true}));
+    await page.locator('video').evaluateAll((items, value) => {
+      items.forEach(video => {video.currentTime = Math.min(value, video.duration - .03);});
     }, seconds);
     await page.waitForFunction(value => Math.abs(document.querySelector('#fp32-video').currentTime - value) < .1 && [...document.querySelectorAll('video')].every(video => !video.seeking), seconds);
     await page.waitForTimeout(100);
   }
 
-  for (const [seconds, fp32, gain] of [[0,0,0],[4.8,0,0],[5.1,0,1],[7.1,0,2],[15.1,0,3],[29.8,0,3],[30.1,1,3],[33.1,2,3],[44.1,3,3]]) {
+  for (const [seconds, fp32, gain] of [[0,0,0],[4.8,0,0],[5.1,0,1],[7.1,0,2],[15.1,0,3],[16.8,0,3],[17.1,0,3],[29.8,0,3],[30.1,1,3],[33.1,2,3],[44.1,3,3]]) {
     await seek(seconds);
     assert.equal(await page.locator('[data-model="fp32"] .complete').count(), fp32, `FP32 phases at ${seconds}s`);
     assert.equal(await page.locator('[data-model="gain"] .complete').count(), gain, `gAIn phases at ${seconds}s`);
+    assert.equal(await page.locator('#gain-completion').isVisible(), seconds >= 17, `gAIn completion tick at ${seconds}s`);
   }
+  await seek(16.8);
+  await page.locator('#play-pause').click();
+  await page.waitForFunction(() => document.querySelector('#gain-video').ended);
+  assert.equal(await page.locator('#gain-completion').isVisible(), true, 'Natural video completion shows the large tick');
+  await page.locator('#play-pause').click();
   await seek(17);
   assert.equal(await page.locator('#start-demo').isVisible(), false);
   await page.screenshot({path: 'artifacts/desktop-1920.png'});
@@ -73,6 +80,7 @@ try {
   });
   await page.waitForTimeout(300);
   assert.equal(await page.locator('.phase-overlay .complete').count(), 0, 'Replay clears phase ticks');
+  assert.equal(await page.locator('#gain-completion').isVisible(), false, 'Replay clears completion tick');
   await page.locator('#play-pause').click();
   await seek(44.8);
   await page.locator('#play-pause').click();
@@ -81,6 +89,7 @@ try {
     return !video.paused && video.currentTime > .1 && video.currentTime < 2;
   });
   assert.equal(await page.locator('.phase-overlay .complete').count(), 0, 'Automatic loop restarts both recordings');
+  assert.equal(await page.locator('#gain-completion').isVisible(), false, 'Automatic loop clears completion tick');
   await page.locator('#play-pause').click();
   await seek(17);
   await page.setViewportSize({width: 1366, height: 768});
@@ -94,7 +103,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'No mobile horizontal overflow');
   await page.screenshot({path: 'artifacts/mobile-390.png', fullPage: true});
   assert.deepEqual(errors, []);
-  console.log('Passed: measured data, natural-speed autoplay, trims, milestone ticks, shared controls, looping, metric toggle, keyboard chart inspection and desktop/mobile layouts.');
+  console.log('Passed: measured data, natural-speed autoplay, trims, milestone ticks, final completion tick, no progress bar, shared controls, looping, metric toggle, keyboard chart inspection and desktop/mobile layouts.');
 } finally {
   await browser.close();
 }

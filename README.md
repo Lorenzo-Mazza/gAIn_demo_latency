@@ -8,13 +8,13 @@ A screen-focused comparison of the FP32 and gAIn surgical AI models: two task re
 npm start
 ```
 
-Open http://localhost:4173. Use the full-screen button or **F** for the exhibition display, **Space** to pause/resume, and **R** to replay both recordings. The playback bar seeks both videos. The shorter recording holds its last frame until the longer recording finishes; both then replay together. Playback is at the original speed.
+Open http://localhost:4173. Use the full-screen button or **F** for the exhibition display, **Space** to pause/resume, and **R** to replay both recordings. The shorter recording holds its last frame until the longer recording finishes; both then replay together. A large green tick appears on the gAIn video when its recording finishes and clears on replay. Playback is at the original speed.
 
 The local server uses only Node's built-in modules and supports HTTP byte ranges so video seeking works before the full files have buffered.
 
 ## Recordings and phase ticks
 
-The videos are muted 1080p H.264 MP4 exports of the supplied recordings. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
+The videos are muted 1080p H.264 MP4 exports of the supplied recordings, with a 1.30× crop focusing on the tool and tissue. A strong, feathered blur over the background person is encoded into both videos and their poster frames. Crop and blur coordinates are stored in `data/media.json` relative to a normalized 1920 × 1080 source. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
 
 | Model | Source | Keep | Reach | Grasp | Stretch |
 | --- | --- | --- | --- | --- | --- |
@@ -55,4 +55,4 @@ npm start
 npm test
 ```
 
-The browser checks cover autoplay and original playback speed, shared playback controls, trim-relative phase timing, replay, the two measured curve series and metric toggle, keyboard inspection, and desktop/mobile layouts. Screenshots are written to the ignored `artifacts/` directory.
+The browser checks cover autoplay and original playback speed, shared playback controls, trim-relative phase timing, the final gAIn completion tick and its reset on replay, the two measured curve series and metric toggle, keyboard inspection, and desktop/mobile layouts. Screenshots are written to the ignored `artifacts/` directory.
