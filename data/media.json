@@ -3,7 +3,7 @@
     "source": "IMG_5318.MOV",
     "trim_start": 3,
     "trim_end": 48,
-    "crop": [240, 240, 1472, 828],
+    "crop": [400, 420, 1152, 648],
     "background_mask": [340, 100, 400, 340],
     "phases": {"reach": 30, "grasp": 33, "stretch": 44},
     "original_timestamps": {"reach": 33, "grasp": 36, "stretch": 47}
@@ -12,7 +12,7 @@
     "source": "IMG_5333.MOV",
     "trim_start": 1,
     "trim_end": 18,
-    "crop": [240, 240, 1472, 828],
+    "crop": [400, 420, 1152, 648],
     "background_mask": [340, 100, 400, 340],
     "phases": {"reach": 5, "grasp": 7, "stretch": 15},
     "original_timestamps": {"reach": 6, "grasp": 8, "stretch": 16}
