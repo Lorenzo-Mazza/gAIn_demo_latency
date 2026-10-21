@@ -8,14 +8,28 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def filter_graph(info):
+def source_dimensions(source):
+    result = subprocess.run([
+        "ffprobe", "-v", "error", "-select_streams", "v:0",
+        "-show_entries", "stream=width,height", "-of", "json", str(source),
+    ], check=True, capture_output=True, text=True)
+    stream = json.loads(result.stdout)["streams"][0]
+    return stream["width"], stream["height"]
+
+
+def filter_graph(info, dimensions=(1920, 1080)):
     """Keep the tool sharp and feather a strong blur over the background person."""
-    x, y, width, height = info["background_mask"]
-    crop_x, crop_y, crop_w, crop_h = info["crop"]
-    alpha = "255*clip(min(min(X,W-1-X),min(Y,H-1-Y))/28,0,1)"
+    scale_x, scale_y = dimensions[0] / 1920, dimensions[1] / 1080
+    def source_rectangle(rectangle):
+        return [2 * round(value * scale / 2) for value, scale in zip(rectangle, [scale_x, scale_y, scale_x, scale_y])]
+    x, y, width, height = source_rectangle(info["background_mask"])
+    crop_x, crop_y, crop_w, crop_h = source_rectangle(info["crop"])
+    radius = round(26 * min(scale_x, scale_y))
+    feather = 28 * min(scale_x, scale_y)
+    alpha = f"255*clip(min(min(X,W-1-X),min(Y,H-1-Y))/{feather:g},0,1)"
     return (
-        "[0:v]scale=1920:1080,split[scene][region];"
-        f"[region]crop={width}:{height}:{x}:{y},boxblur=26:3,format=yuva420p,"
+        "[0:v]split[scene][region];"
+        f"[region]crop={width}:{height}:{x}:{y},boxblur={radius}:3,format=yuva420p,"
         f"geq=lum='lum(X,Y)':cb='cb(X,Y)':cr='cr(X,Y)':a='{alpha}'[privacy];"
         f"[scene][privacy]overlay={x}:{y}:format=auto,"
         f"crop={crop_w}:{crop_h}:{crop_x}:{crop_y},scale=1920:1080,format=yuv420p[out]"
@@ -41,7 +55,7 @@ def main():
             "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
             "-ss", str(info["trim_start"]), "-threads", "4", "-i", str(source),
             "-t", str(info["trim_end"] - info["trim_start"]),
-            "-filter_complex_threads", "4", "-filter_complex", filter_graph(info),
+            "-filter_complex_threads", "4", "-filter_complex", filter_graph(info, source_dimensions(source)),
             "-map", "[out]", "-an", "-sn", "-dn", "-map_metadata", "-1", "-map_chapters", "-1",
             "-c:v", "libx264", "-threads", "4", "-preset", "fast",
             "-crf", "22", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(destination),

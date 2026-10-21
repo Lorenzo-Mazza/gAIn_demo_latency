@@ -14,7 +14,7 @@ The local server uses only Node's built-in modules and supports HTTP byte ranges
 
 ## Recordings and phase ticks
 
-The videos are muted 1080p H.264 MP4 exports of the supplied recordings. The crops match the apparent size of the tool and tissue: FP32 uses 1152 × 648 (1.67× zoom), and gAIn uses 960 × 540 (2.00× zoom) from normalized 1920 × 1080 sources. The tighter gAIn crop compensates for its wider camera view; framing was compared at the start, grasp, and stretch phases. A strong, feathered blur over the background person is encoded into both videos and their poster frames. Crop and blur coordinates are stored in `data/media.json`. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
+The videos are muted 1080p H.264 MP4 exports of the supplied recordings, tightly centered on the bowel and instrument tips. The crops match their apparent scale: FP32 uses 768 × 432 (2.50× zoom), and gAIn uses 640 × 360 (3.00× zoom) in normalized 1920 × 1080 coordinates. Both views are 50% closer than the previous version; the tighter gAIn crop compensates for its wider camera view. Framing was compared at the start, grasp, and stretch phases. The exporter maps these coordinates directly to the original source pixels before resizing, preserving the gAIn recording's 4K detail. Background-person masking remains in the export pipeline. Crop and blur coordinates are stored in `data/media.json`. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
 
 | Model | Source | Keep | Reach | Grasp | Stretch |
 | --- | --- | --- | --- | --- | --- |
