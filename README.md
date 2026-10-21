@@ -14,7 +14,7 @@ The local server uses only Node's built-in modules and supports HTTP byte ranges
 
 ## Recordings and phase ticks
 
-The videos are muted 1080p H.264 MP4 exports of the supplied recordings. Both use an identical 1152 × 648 crop from a normalized 1920 × 1080 source: 1.67× zoom, centered on the tool and tissue. A strong, feathered blur over the background person is encoded into both videos and their poster frames. Crop and blur coordinates are stored in `data/media.json`. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
+The videos are muted 1080p H.264 MP4 exports of the supplied recordings. The crops match the apparent size of the tool and tissue: FP32 uses 1152 × 648 (1.67× zoom), and gAIn uses 960 × 540 (2.00× zoom) from normalized 1920 × 1080 sources. The tighter gAIn crop compensates for its wider camera view; framing was compared at the start, grasp, and stretch phases. A strong, feathered blur over the background person is encoded into both videos and their poster frames. Crop and blur coordinates are stored in `data/media.json`. Phase completion times were supplied by Lorenzo Mazza. Times in the source recordings:
 
 | Model | Source | Keep | Reach | Grasp | Stretch |
 | --- | --- | --- | --- | --- | --- |
@@ -24,6 +24,8 @@ The videos are muted 1080p H.264 MP4 exports of the supplied recordings. Both us
 The FP32 cut retains one second after the final milestone. The phase times in `data/media.json` are relative to the trimmed files: FP32 30/33/44 seconds; gAIn 5/7/15 seconds. Seeking and replaying update the ticks in either direction. The gAIn milestone described as retraction uses the shared on-screen label “Stretch.”
 
 `scripts/prepare_videos.py` regenerates both web videos and posters from the original MOV files in `~/Downloads`, using this configuration. It removes audio and original phone/location metadata and preserves playback speed. Original source recordings are not modified or included in the repository.
+
+Use `python3 scripts/prepare_videos.py --model gain` to rebuild only the right-hand recording.
 
 ## Latency curves
 

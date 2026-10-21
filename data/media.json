@@ -12,7 +12,7 @@
     "source": "IMG_5333.MOV",
     "trim_start": 1,
     "trim_end": 18,
-    "crop": [400, 420, 1152, 648],
+    "crop": [496, 474, 960, 540],
     "background_mask": [340, 100, 400, 340],
     "phases": {"reach": 5, "grasp": 7, "stretch": 15},
     "original_timestamps": {"reach": 6, "grasp": 8, "stretch": 16}

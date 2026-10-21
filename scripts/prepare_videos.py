@@ -25,11 +25,14 @@ def filter_graph(info):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-directory", type=Path, default=Path.home() / "Downloads")
+    parser.add_argument("--model", choices=["fp32", "gain"], help="Export a single recording; default: both")
     args = parser.parse_args()
     config = json.loads((ROOT / "data/media.json").read_text())
     target = ROOT / "assets/videos"
     target.mkdir(parents=True, exist_ok=True)
     for model, info in config.items():
+        if args.model and model != args.model:
+            continue
         source = args.source_directory / info["source"]
         if not source.is_file():
             raise FileNotFoundError(source)
