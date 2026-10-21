@@ -10,7 +10,11 @@ npm start
 
 Open http://localhost:4173. Use the full-screen button or **F** for the exhibition display, **Space** to pause/resume, and **R** to replay both recordings. The shorter recording holds its last frame until the longer recording finishes; both then replay together. A large green tick appears on the gAIn video when its recording finishes and clears on replay. Playback is at the original speed.
 
+The two latency curves draw continuously from left to right with their respective videos. The drawing pauses with playback, holds the finished gAIn trace, and resets when both recordings replay. Switching the latency metric or resizing the page preserves the current reveal position.
+
 The local server uses only Node's built-in modules and supports HTTP byte ranges so video seeking works before the full files have buffered.
+
+Both videos and their poster frames display at 80% brightness to reduce glare on the screen. This adjustment is applied to the video elements in CSS.
 
 ## Recordings and phase ticks
 
@@ -36,7 +40,7 @@ Use `python3 scripts/prepare_videos.py --model gain` to rebuild only the right-h
 | AI computation | 776.4339 ms | 249.5100 ms | 3.1118× |
 | Complete cycle | 936.9932 ms | 398.7800 ms | 2.3496× |
 
-The logs are separate Raspberry Pi recordings. The latency curves are a static comparison of those measurements; they are not presented as synchronized video telemetry. Full-cycle latency excludes robot motion duration. The model uses quantization-aware training, INT4 grouped linear weights and dynamic INT8 activations, with other operations retaining floating point.
+The logs are separate Raspberry Pi recordings. The animation reveals each complete recorded trace over the duration of its corresponding trimmed video; this is presentation timing, not live or timestamp-matched video telemetry. The measured values and displayed means are unchanged. Full-cycle latency excludes robot motion duration. The model uses quantization-aware training, INT4 grouped linear weights and dynamic INT8 activations, with other operations retaining floating point.
 
 ## Branding and type
 
@@ -57,4 +61,4 @@ npm start
 npm test
 ```
 
-The browser checks cover autoplay and original playback speed, shared playback controls, trim-relative phase timing, the final gAIn completion tick and its reset on replay, the two measured curve series and metric toggle, keyboard inspection, and desktop/mobile layouts. Screenshots are written to the ignored `artifacts/` directory.
+The browser checks cover autoplay and original playback speed, shared playback controls, curve growth and pause/replay behavior, trim-relative phase timing, the final gAIn completion tick and its reset on replay, the two measured curve series and metric toggle, keyboard inspection, and desktop/mobile layouts. Screenshots are written to the ignored `artifacts/` directory.

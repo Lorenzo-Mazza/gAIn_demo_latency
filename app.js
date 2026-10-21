@@ -15,6 +15,8 @@ let media;
 let chartLayout;
 let inspectedStep = 1;
 let playbackRequest = 0;
+let curveAnimationFrame = 0;
+const curveClips = new Map();
 
 function reportError(message) {
   errorMessage.textContent = message;
@@ -27,6 +29,32 @@ function setPlaying(value) {
   playButton.setAttribute('aria-label', value ? 'Pause videos' : 'Play videos');
   playButton.setAttribute('aria-pressed', String(!value));
   playButton.title = `${value ? 'Pause' : 'Play'} videos (Space)`;
+  if (value && !curveAnimationFrame) curveAnimationFrame = requestAnimationFrame(animateCurves);
+  if (!value) {
+    cancelAnimationFrame(curveAnimationFrame);
+    curveAnimationFrame = 0;
+    updateCurveReveal();
+  }
+}
+
+function updateCurveReveal() {
+  ['fp32', 'gain'].forEach((model, index) => {
+    const clip = curveClips.get(model);
+    if (!clip) return;
+    const video = videos[index];
+    let progress = 0;
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      const finished = video.ended || (video.currentTime >= video.duration - .06 && master.currentTime >= video.duration);
+      progress = finished ? 1 : Math.max(0, Math.min(1, video.currentTime / video.duration));
+    }
+    clip.rectangle.setAttribute('width', (clip.width * progress).toFixed(2));
+  });
+}
+
+function animateCurves() {
+  curveAnimationFrame = 0;
+  updateCurveReveal();
+  if (playing) curveAnimationFrame = requestAnimationFrame(animateCurves);
 }
 
 async function playVideos() {
@@ -72,6 +100,7 @@ function updatePhases() {
 
 function updatePlayback() {
   updatePhases();
+  updateCurveReveal();
   const gain = videos[1];
   const finished = Number.isFinite(gain.duration) && gain.currentTime >= gain.duration - .06 && (gain.ended || master.currentTime >= gain.duration);
   gainCompletion.hidden = !finished;
@@ -158,8 +187,9 @@ function drawChart() {
   chartLayout = {width, height, margin, x, y, innerWidth, innerHeight};
   chart.setAttribute('viewBox', `0 0 ${width} ${height}`);
   chart.replaceChildren();
+  curveClips.clear();
   chart.append(svgElement('title', {}, metric === 'inference' ? 'AI computation latency' : 'Complete processing cycle latency'));
-  chart.append(svgElement('desc', {}, `Each line shows measured latency per prediction. Mean FP32 latency: ${Math.round(latency.summary.fp32[metric])} milliseconds. Mean gAIn latency: ${Math.round(latency.summary.gain[metric])} milliseconds.`));
+  chart.append(svgElement('desc', {}, `Each line progressively reveals recorded latency measurements as its video plays. Mean FP32 latency: ${Math.round(latency.summary.fp32[metric])} milliseconds. Mean gAIn latency: ${Math.round(latency.summary.gain[metric])} milliseconds.`));
   const defs = svgElement('defs');
   const gradient = svgElement('linearGradient', {id: 'gain-area', x1: '0', x2: '0', y1: '0', y2: '1'});
   gradient.append(svgElement('stop', {offset: '0%', 'stop-color': '#008466', 'stop-opacity': '.065'}));
@@ -176,17 +206,25 @@ function drawChart() {
   chart.append(svgElement('text', {x: width - margin.right, y: height - 1, 'text-anchor': 'end', class: 'chart-unit'}, 'Prediction'));
   for (const model of ['fp32', 'gain']) {
     const samples = latency.samples[model];
+    const clip = svgElement('clipPath', {id: `reveal-${model}`, clipPathUnits: 'userSpaceOnUse'});
+    const rectangle = svgElement('rect', {x: margin.left - 3, y: margin.top - 5, width: 0, height: innerHeight + 10});
+    clip.append(rectangle);
+    defs.append(clip);
+    curveClips.set(model, {rectangle, width: x(samples.at(-1).step) - x(samples[0].step) + 6});
+    const trace = svgElement('g', {'clip-path': `url(#reveal-${model})`});
     const path = samples.map((sample, index) => `${index ? 'L' : 'M'}${x(sample.step).toFixed(2)},${y(sample[metric]).toFixed(2)}`).join(' ');
     if (model === 'gain') {
-      chart.append(svgElement('path', {d: `${path} L${x(samples.at(-1).step)},${y(0)} L${x(samples[0].step)},${y(0)} Z`, fill: 'url(#gain-area)'}));
+      trace.append(svgElement('path', {d: `${path} L${x(samples.at(-1).step)},${y(0)} L${x(samples[0].step)},${y(0)} Z`, fill: 'url(#gain-area)'}));
     }
-    chart.append(svgElement('path', {d: path, class: `latency-curve curve-${model}`, 'data-series': model}));
+    trace.append(svgElement('path', {d: path, class: `latency-curve curve-${model}`, 'data-series': model}));
+    chart.append(trace);
   }
   chart.append(svgElement('line', {id: 'chart-hover-line', x1: 0, x2: 0, y1: margin.top, y2: height - margin.bottom, class: 'chart-hover-line', visibility: 'hidden'}));
   document.querySelector('#speedup').textContent = metric === 'inference' ? `${latency.summary.speedup[metric].toFixed(1)}×` : `${latency.summary.speedup[metric].toFixed(2)}×`;
   document.querySelector('#fp32-mean').textContent = `${Math.round(latency.summary.fp32[metric])} ms`;
   document.querySelector('#gain-mean').textContent = `${Math.round(latency.summary.gain[metric])} ms`;
   chart.setAttribute('aria-label', `${metric === 'inference' ? 'AI computation' : 'Complete cycle'} latency per prediction. Use left and right arrows to inspect predictions.`);
+  updateCurveReveal();
   hideTooltip();
 }
 

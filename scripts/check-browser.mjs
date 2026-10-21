@@ -29,12 +29,22 @@ try {
   assert.equal(await page.locator('#speedup').textContent(), '3.1×');
   assert.equal(await page.locator('input[type="range"]').count(), 0, 'No progress bar');
   assert.equal(await page.locator('#gain-completion').isVisible(), false);
+  assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => getComputedStyle(video).filter)), ['brightness(0.8)', 'brightness(0.8)']);
+  const revealWidths = () => page.locator('clipPath rect').evaluateAll(items => items.map(rect => rect.width.baseVal.value));
+  const growingBefore = await revealWidths();
+  await page.waitForTimeout(250);
+  const growingAfter = await revealWidths();
+  assert.ok(growingAfter.every((width, index) => width > growingBefore[index]), 'Both curves grow while the videos play');
+  assert.ok(growingAfter[1] > growingAfter[0], 'The shorter gAIn recording reveals its curve faster');
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.playbackRate)), [1, 1]);
   const lengths = await page.locator('video').evaluateAll(items => items.map(video => video.duration));
   assert.ok(Math.abs(lengths[0] - 45) < .1, `FP32 duration ${lengths[0]}`);
   assert.ok(Math.abs(lengths[1] - 17) < .1, `gAIn duration ${lengths[1]}`);
   await page.locator('#play-pause').click();
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.paused)), [true, true]);
+  const pausedWidths = await revealWidths();
+  await page.waitForTimeout(250);
+  assert.deepEqual(await revealWidths(), pausedWidths, 'Pause freezes both curves');
 
   async function seek(seconds) {
     await page.locator('video').evaluateAll((items, value) => {
@@ -56,6 +66,10 @@ try {
   assert.equal(await page.locator('#gain-completion').isVisible(), true, 'Natural video completion shows the large tick');
   await page.locator('#play-pause').click();
   await seek(17);
+  const heldTrace = await page.locator('#reveal-gain rect').evaluate(rect => rect.width.baseVal.value);
+  const completeGainWidth = await page.locator('[data-series="gain"]').evaluate(path => path.getBBox().width);
+  assert.ok(heldTrace >= completeGainWidth, 'Finished gAIn recording holds its complete curve');
+  const positionBeforeToggle = await revealWidths();
   assert.equal(await page.locator('#start-demo').isVisible(), false);
   await page.screenshot({path: 'artifacts/desktop-1920.png'});
   assert.equal(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1), true, '1920 desktop fits the screen');
@@ -67,6 +81,7 @@ try {
   assert.equal(await page.locator('#speedup').textContent(), '2.35×');
   assert.equal(await page.locator('#fp32-mean').textContent(), '937 ms');
   assert.equal(await page.locator('#gain-mean').textContent(), '399 ms');
+  assert.deepEqual(await revealWidths(), positionBeforeToggle, 'Metric switching keeps the reveal position');
   await page.getByRole('button', {name: 'AI computation', exact: true}).click();
   await page.locator('#latency-chart').focus();
   await page.keyboard.press('ArrowRight');
@@ -81,6 +96,7 @@ try {
   await page.waitForTimeout(300);
   assert.equal(await page.locator('.phase-overlay .complete').count(), 0, 'Replay clears phase ticks');
   assert.equal(await page.locator('#gain-completion').isVisible(), false, 'Replay clears completion tick');
+  assert.ok((await revealWidths()).every(width => width < 150), 'Replay restarts both curves near the beginning');
   await page.locator('#play-pause').click();
   await seek(44.8);
   await page.locator('#play-pause').click();
