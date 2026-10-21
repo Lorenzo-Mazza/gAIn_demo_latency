@@ -1,0 +1,618 @@
+{
+  "samples": {
+    "fp32": [
+      {
+        "step": 1,
+        "inference": 801.5,
+        "total": 974.2
+      },
+      {
+        "step": 2,
+        "inference": 781.9,
+        "total": 935.9
+      },
+      {
+        "step": 3,
+        "inference": 793.3,
+        "total": 942.8
+      },
+      {
+        "step": 4,
+        "inference": 949.2,
+        "total": 1107.0
+      },
+      {
+        "step": 5,
+        "inference": 796.9,
+        "total": 967.7
+      },
+      {
+        "step": 6,
+        "inference": 768.1,
+        "total": 938.1
+      },
+      {
+        "step": 7,
+        "inference": 761.4,
+        "total": 902.4
+      },
+      {
+        "step": 8,
+        "inference": 761.5,
+        "total": 908.9
+      },
+      {
+        "step": 9,
+        "inference": 776.4,
+        "total": 936.2
+      },
+      {
+        "step": 10,
+        "inference": 767.8,
+        "total": 946.6
+      },
+      {
+        "step": 11,
+        "inference": 787.7,
+        "total": 944.5
+      },
+      {
+        "step": 12,
+        "inference": 765.7,
+        "total": 917.0
+      },
+      {
+        "step": 13,
+        "inference": 761.4,
+        "total": 931.6
+      },
+      {
+        "step": 14,
+        "inference": 775.5,
+        "total": 945.1
+      },
+      {
+        "step": 15,
+        "inference": 759.8,
+        "total": 927.0
+      },
+      {
+        "step": 16,
+        "inference": 764.5,
+        "total": 922.3
+      },
+      {
+        "step": 17,
+        "inference": 776.6,
+        "total": 926.3
+      },
+      {
+        "step": 18,
+        "inference": 764.6,
+        "total": 944.0
+      },
+      {
+        "step": 19,
+        "inference": 777.9,
+        "total": 938.4
+      },
+      {
+        "step": 20,
+        "inference": 766.3,
+        "total": 920.4
+      },
+      {
+        "step": 21,
+        "inference": 764.4,
+        "total": 903.6
+      },
+      {
+        "step": 22,
+        "inference": 782.6,
+        "total": 949.7
+      },
+      {
+        "step": 23,
+        "inference": 806.6,
+        "total": 966.1
+      },
+      {
+        "step": 24,
+        "inference": 790.0,
+        "total": 984.6
+      },
+      {
+        "step": 25,
+        "inference": 770.4,
+        "total": 921.2
+      },
+      {
+        "step": 26,
+        "inference": 757.0,
+        "total": 909.4
+      },
+      {
+        "step": 27,
+        "inference": 782.4,
+        "total": 926.2
+      },
+      {
+        "step": 28,
+        "inference": 823.2,
+        "total": 980.3
+      },
+      {
+        "step": 29,
+        "inference": 765.5,
+        "total": 921.0
+      },
+      {
+        "step": 30,
+        "inference": 775.2,
+        "total": 913.8
+      },
+      {
+        "step": 31,
+        "inference": 767.4,
+        "total": 921.6
+      },
+      {
+        "step": 32,
+        "inference": 772.6,
+        "total": 931.8
+      },
+      {
+        "step": 33,
+        "inference": 770.6,
+        "total": 952.6
+      },
+      {
+        "step": 34,
+        "inference": 769.0,
+        "total": 922.1
+      },
+      {
+        "step": 35,
+        "inference": 782.5,
+        "total": 940.6
+      },
+      {
+        "step": 36,
+        "inference": 801.1,
+        "total": 949.5
+      },
+      {
+        "step": 37,
+        "inference": 766.2,
+        "total": 912.3
+      },
+      {
+        "step": 38,
+        "inference": 757.7,
+        "total": 914.2
+      },
+      {
+        "step": 39,
+        "inference": 761.8,
+        "total": 932.0
+      },
+      {
+        "step": 40,
+        "inference": 796.0,
+        "total": 946.1
+      },
+      {
+        "step": 41,
+        "inference": 767.1,
+        "total": 915.5
+      },
+      {
+        "step": 42,
+        "inference": 770.4,
+        "total": 945.0
+      },
+      {
+        "step": 43,
+        "inference": 776.6,
+        "total": 942.0
+      },
+      {
+        "step": 44,
+        "inference": 761.1,
+        "total": 929.1
+      },
+      {
+        "step": 45,
+        "inference": 768.0,
+        "total": 920.1
+      },
+      {
+        "step": 46,
+        "inference": 761.1,
+        "total": 933.1
+      },
+      {
+        "step": 47,
+        "inference": 769.8,
+        "total": 933.7
+      },
+      {
+        "step": 48,
+        "inference": 774.1,
+        "total": 942.1
+      },
+      {
+        "step": 49,
+        "inference": 773.7,
+        "total": 952.8
+      },
+      {
+        "step": 50,
+        "inference": 778.0,
+        "total": 932.4
+      },
+      {
+        "step": 51,
+        "inference": 758.7,
+        "total": 896.5
+      },
+      {
+        "step": 52,
+        "inference": 763.9,
+        "total": 941.0
+      },
+      {
+        "step": 53,
+        "inference": 768.4,
+        "total": 933.3
+      },
+      {
+        "step": 54,
+        "inference": 760.1,
+        "total": 931.2
+      },
+      {
+        "step": 55,
+        "inference": 770.0,
+        "total": 936.2
+      },
+      {
+        "step": 56,
+        "inference": 784.7,
+        "total": 956.8
+      },
+      {
+        "step": 57,
+        "inference": 763.9,
+        "total": 926.5
+      },
+      {
+        "step": 58,
+        "inference": 765.4,
+        "total": 936.0
+      },
+      {
+        "step": 59,
+        "inference": 754.4,
+        "total": 904.2
+      }
+    ],
+    "gain": [
+      {
+        "step": 1,
+        "inference": 247.0,
+        "total": 389.2
+      },
+      {
+        "step": 2,
+        "inference": 265.7,
+        "total": 408.0
+      },
+      {
+        "step": 3,
+        "inference": 262.9,
+        "total": 405.8
+      },
+      {
+        "step": 4,
+        "inference": 246.7,
+        "total": 395.6
+      },
+      {
+        "step": 5,
+        "inference": 247.0,
+        "total": 420.4
+      },
+      {
+        "step": 6,
+        "inference": 250.6,
+        "total": 411.4
+      },
+      {
+        "step": 7,
+        "inference": 247.1,
+        "total": 399.7
+      },
+      {
+        "step": 8,
+        "inference": 246.5,
+        "total": 388.7
+      },
+      {
+        "step": 9,
+        "inference": 247.0,
+        "total": 392.4
+      },
+      {
+        "step": 10,
+        "inference": 251.7,
+        "total": 394.4
+      },
+      {
+        "step": 11,
+        "inference": 253.6,
+        "total": 395.3
+      },
+      {
+        "step": 12,
+        "inference": 254.2,
+        "total": 398.8
+      },
+      {
+        "step": 13,
+        "inference": 253.4,
+        "total": 400.9
+      },
+      {
+        "step": 14,
+        "inference": 253.8,
+        "total": 407.6
+      },
+      {
+        "step": 15,
+        "inference": 247.6,
+        "total": 397.7
+      },
+      {
+        "step": 16,
+        "inference": 254.6,
+        "total": 397.8
+      },
+      {
+        "step": 17,
+        "inference": 254.8,
+        "total": 407.4
+      },
+      {
+        "step": 18,
+        "inference": 247.3,
+        "total": 393.4
+      },
+      {
+        "step": 19,
+        "inference": 247.6,
+        "total": 408.7
+      },
+      {
+        "step": 20,
+        "inference": 247.1,
+        "total": 390.5
+      },
+      {
+        "step": 21,
+        "inference": 250.0,
+        "total": 395.9
+      },
+      {
+        "step": 22,
+        "inference": 254.7,
+        "total": 408.0
+      },
+      {
+        "step": 23,
+        "inference": 246.7,
+        "total": 388.7
+      },
+      {
+        "step": 24,
+        "inference": 247.0,
+        "total": 402.1
+      },
+      {
+        "step": 25,
+        "inference": 249.4,
+        "total": 414.0
+      },
+      {
+        "step": 26,
+        "inference": 253.6,
+        "total": 404.2
+      },
+      {
+        "step": 27,
+        "inference": 248.0,
+        "total": 411.1
+      },
+      {
+        "step": 28,
+        "inference": 247.3,
+        "total": 389.2
+      },
+      {
+        "step": 29,
+        "inference": 252.4,
+        "total": 399.5
+      },
+      {
+        "step": 30,
+        "inference": 247.4,
+        "total": 394.7
+      },
+      {
+        "step": 31,
+        "inference": 246.6,
+        "total": 395.0
+      },
+      {
+        "step": 32,
+        "inference": 246.8,
+        "total": 389.3
+      },
+      {
+        "step": 33,
+        "inference": 246.5,
+        "total": 385.2
+      },
+      {
+        "step": 34,
+        "inference": 246.6,
+        "total": 399.3
+      },
+      {
+        "step": 35,
+        "inference": 247.2,
+        "total": 400.6
+      },
+      {
+        "step": 36,
+        "inference": 246.4,
+        "total": 389.4
+      },
+      {
+        "step": 37,
+        "inference": 247.0,
+        "total": 388.9
+      },
+      {
+        "step": 38,
+        "inference": 247.0,
+        "total": 391.2
+      },
+      {
+        "step": 39,
+        "inference": 246.9,
+        "total": 399.0
+      },
+      {
+        "step": 40,
+        "inference": 254.5,
+        "total": 399.7
+      },
+      {
+        "step": 41,
+        "inference": 245.9,
+        "total": 397.0
+      },
+      {
+        "step": 42,
+        "inference": 246.4,
+        "total": 405.5
+      },
+      {
+        "step": 43,
+        "inference": 246.7,
+        "total": 392.2
+      },
+      {
+        "step": 44,
+        "inference": 258.1,
+        "total": 406.5
+      },
+      {
+        "step": 45,
+        "inference": 246.8,
+        "total": 382.6
+      },
+      {
+        "step": 46,
+        "inference": 248.1,
+        "total": 388.0
+      },
+      {
+        "step": 47,
+        "inference": 248.2,
+        "total": 420.4
+      },
+      {
+        "step": 48,
+        "inference": 249.7,
+        "total": 399.9
+      },
+      {
+        "step": 49,
+        "inference": 253.9,
+        "total": 411.6
+      },
+      {
+        "step": 50,
+        "inference": 247.8,
+        "total": 398.7
+      },
+      {
+        "step": 51,
+        "inference": 246.8,
+        "total": 389.4
+      },
+      {
+        "step": 52,
+        "inference": 251.6,
+        "total": 391.6
+      },
+      {
+        "step": 53,
+        "inference": 246.9,
+        "total": 407.2
+      },
+      {
+        "step": 54,
+        "inference": 254.1,
+        "total": 401.2
+      },
+      {
+        "step": 55,
+        "inference": 247.2,
+        "total": 397.9
+      },
+      {
+        "step": 56,
+        "inference": 247.2,
+        "total": 394.0
+      },
+      {
+        "step": 57,
+        "inference": 246.2,
+        "total": 401.1
+      },
+      {
+        "step": 58,
+        "inference": 247.7,
+        "total": 399.1
+      },
+      {
+        "step": 59,
+        "inference": 246.3,
+        "total": 389.2
+      },
+      {
+        "step": 60,
+        "inference": 246.8,
+        "total": 405.0
+      }
+    ]
+  },
+  "summary": {
+    "fp32": {
+      "inference": 776.4338983050847,
+      "total": 936.9932203389832
+    },
+    "gain": {
+      "inference": 249.51,
+      "total": 398.78000000000003
+    },
+    "speedup": {
+      "inference": 3.1118347894075775,
+      "total": 2.3496494817668467
+    }
+  },
+  "method": "Original prediction indices; step 0 excluded; remaining samples unmodified. Separate Raspberry Pi recordings. Curves are not synchronized to video timestamps."
+}
