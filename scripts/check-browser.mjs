@@ -24,7 +24,7 @@ try {
   await page.goto(origin, {waitUntil: 'domcontentloaded'});
   await page.waitForFunction(() => document.querySelector('#fp32-video').currentTime > 0.2);
   assert.equal(await page.locator('.latency-curve').count(), 2);
-  assert.deepEqual(await page.locator('.latency-curve').evaluateAll(items => items.map(path => getComputedStyle(path).stroke)), ['rgb(124, 142, 133)', 'rgb(0, 255, 0)']);
+  assert.deepEqual(await page.locator('.latency-curve').evaluateAll(items => items.map(path => getComputedStyle(path).stroke)), ['rgb(124, 142, 133)', 'rgb(0, 138, 0)']);
   assert.equal(await page.locator('#latency-chart circle').count(), 0);
   assert.equal(await page.locator('#speedup').textContent(), '3.1×');
   assert.equal(await page.locator('input[type="range"]').count(), 0, 'No progress bar');
@@ -38,8 +38,8 @@ try {
   assert.ok(growingAfter[1] > growingAfter[0], 'The shorter gAIn recording reveals its curve faster');
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.playbackRate)), [1, 1]);
   const lengths = await page.locator('video').evaluateAll(items => items.map(video => video.duration));
-  assert.ok(Math.abs(lengths[0] - 45) < .1, `FP32 duration ${lengths[0]}`);
-  assert.ok(Math.abs(lengths[1] - 17) < .1, `gAIn duration ${lengths[1]}`);
+  assert.ok(Math.abs(lengths[0] - 17) < .1, `gAIn duration ${lengths[0]}`);
+  assert.ok(Math.abs(lengths[1] - 45) < .1, `FP32 duration ${lengths[1]}`);
   await page.locator('#play-pause').click();
   assert.deepEqual(await page.locator('video').evaluateAll(items => items.map(video => video.paused)), [true, true]);
   const pausedWidths = await revealWidths();

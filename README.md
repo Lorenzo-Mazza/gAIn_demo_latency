@@ -29,7 +29,7 @@ The FP32 cut retains one second after the final milestone. The phase times in `d
 
 `scripts/prepare_videos.py` regenerates both web videos and posters from the original MOV files in `~/Downloads`, using this configuration. It removes audio and original phone/location metadata and preserves playback speed. Original source recordings are not modified or included in the repository.
 
-Use `python3 scripts/prepare_videos.py --model gain` to rebuild only the right-hand recording.
+Use `python3 scripts/prepare_videos.py --model gain` to rebuild only the left-hand recording.
 
 ## Latency curves
 

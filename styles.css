@@ -18,7 +18,7 @@
   color-scheme: light;
   --ink: #12382b;
   --muted: #687e72;
-  --green: #00ff00;
+  --green: #008a00;
   --standard: #7c8e85;
   --border: #dbe8e0;
   --mint: #e5f6ed;
@@ -85,8 +85,8 @@ h1 { margin: 0; font-size: clamp(24px, 2.05vw, 38px); line-height: 1.14; letter-
   min-height: 0;
 }
 .video-card { margin: 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); overflow: hidden; min-width: 0; min-height: 0; display: flex; flex-direction: column; box-shadow: 0 4px 15px #12382b04; }
-.standard-card { grid-column: 1; }
-.gain-card { grid-column: 2; border-color: color-mix(in srgb, var(--green) 30%, var(--border)); }
+.standard-card { grid-column: 2; }
+.gain-card { grid-column: 1; border-color: color-mix(in srgb, var(--green) 30%, var(--border)); }
 .video-card figcaption { display: flex; align-items: center; justify-content: space-between; padding: 12px 19px; min-height: 57px; gap: 12px; }
 .gain-card figcaption { background: linear-gradient(100deg, color-mix(in srgb, var(--green) 6%, white), white 70%); }
 .model-name { font-size: clamp(21px, 1.55vw, 29px); font-weight: 700; line-height: 1.1; }
@@ -95,7 +95,7 @@ h1 { margin: 0; font-size: clamp(24px, 2.05vw, 38px); line-height: 1.14; letter-
 .model-logo { display: block; width: clamp(112px, 9vw, 160px); height: auto; }
 .gain-card .model-name span { margin-left: 0; color: inherit; }
 .model-chip { font-size: clamp(12px, .88vw, 16px); font-weight: 700; color: #5d7568; background: #edf3ef; padding: 5px 11px; border-radius: 8px; white-space: nowrap; }
-.gain-card .model-chip { color: var(--green); background: var(--ink); }
+.gain-card .model-chip { color: var(--green); background: color-mix(in srgb, var(--green) 10%, white); }
 .video-frame { flex: 1; min-height: 0; position: relative; background: #102219; overflow: hidden; }
 video { display: block; width: 100%; height: 100%; object-fit: contain; filter: brightness(.8); }
 .phase-overlay { position: absolute; right: 15px; top: 15px; list-style: none; margin: 0; padding: 10px 16px 10px 11px; background: #f6faf6ed; border: 1px solid #ffffffb5; border-radius: 13px; box-shadow: 0 5px 24px #132c2514; backdrop-filter: blur(10px); }
