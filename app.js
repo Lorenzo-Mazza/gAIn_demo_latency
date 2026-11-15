@@ -192,8 +192,8 @@ function drawChart() {
   chart.append(svgElement('desc', {}, `Each line progressively reveals recorded latency measurements as its video plays. Mean FP32 latency: ${Math.round(latency.summary.fp32[metric])} milliseconds. Mean gAIn latency: ${Math.round(latency.summary.gain[metric])} milliseconds.`));
   const defs = svgElement('defs');
   const gradient = svgElement('linearGradient', {id: 'gain-area', x1: '0', x2: '0', y1: '0', y2: '1'});
-  gradient.append(svgElement('stop', {offset: '0%', 'stop-color': '#008466', 'stop-opacity': '.065'}));
-  gradient.append(svgElement('stop', {offset: '100%', 'stop-color': '#008466', 'stop-opacity': '.006'}));
+  gradient.append(svgElement('stop', {offset: '0%', 'stop-color': 'var(--green)', 'stop-opacity': '.065'}));
+  gradient.append(svgElement('stop', {offset: '100%', 'stop-color': 'var(--green)', 'stop-opacity': '.006'}));
   defs.append(gradient);
   chart.append(defs);
   for (const value of [0, 250, 500, 750, 1000]) {

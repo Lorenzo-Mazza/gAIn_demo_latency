@@ -18,7 +18,7 @@
   color-scheme: light;
   --ink: #12382b;
   --muted: #687e72;
-  --green: #008466;
+  --green: #00ff00;
   --standard: #7c8e85;
   --border: #dbe8e0;
   --mint: #e5f6ed;
@@ -57,7 +57,7 @@ button svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke
 .masthead { display: flex; align-items: center; gap: clamp(24px, 3vw, 58px); min-height: 58px; }
 .brand { width: clamp(190px, 17vw, 280px); height: auto; display: block; }
 .intro { flex: 1; min-width: 0; }
-h1 { margin: 0; font-size: clamp(24px, 2.05vw, 38px); line-height: 1.14; letter-spacing: -.025em; }
+h1 { margin: 0; font-size: clamp(24px, 2.05vw, 38px); line-height: 1.14; letter-spacing: -.025em; color: var(--green); }
 .intro p { margin: 5px 0 0; font-size: clamp(14px, 1.05vw, 19px); color: var(--muted); }
 .intro p span { padding: 0 10px; color: #9bb3a6; }
 .transport { display: flex; gap: 8px; }
@@ -85,14 +85,17 @@ h1 { margin: 0; font-size: clamp(24px, 2.05vw, 38px); line-height: 1.14; letter-
   min-height: 0;
 }
 .video-card { margin: 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); overflow: hidden; min-width: 0; min-height: 0; display: flex; flex-direction: column; box-shadow: 0 4px 15px #12382b04; }
-.gain-card { border-color: #b6dcca; }
+.standard-card { grid-column: 1; }
+.gain-card { grid-column: 2; border-color: color-mix(in srgb, var(--green) 30%, var(--border)); }
 .video-card figcaption { display: flex; align-items: center; justify-content: space-between; padding: 12px 19px; min-height: 57px; gap: 12px; }
-.gain-card figcaption { background: linear-gradient(100deg, #eefbf4, #ffffff 70%); }
+.gain-card figcaption { background: linear-gradient(100deg, color-mix(in srgb, var(--green) 6%, white), white 70%); }
 .model-name { font-size: clamp(21px, 1.55vw, 29px); font-weight: 700; line-height: 1.1; }
 .model-name span { font-size: clamp(14px, 1.05vw, 19px); font-weight: 400; color: var(--muted); margin-left: 12px; }
-.gain-card .model-name { color: var(--green); }
+.gain-card .model-name { display: flex; align-items: center; gap: 12px; color: var(--green); }
+.model-logo { display: block; width: clamp(112px, 9vw, 160px); height: auto; }
+.gain-card .model-name span { margin-left: 0; color: inherit; }
 .model-chip { font-size: clamp(12px, .88vw, 16px); font-weight: 700; color: #5d7568; background: #edf3ef; padding: 5px 11px; border-radius: 8px; white-space: nowrap; }
-.gain-card .model-chip { color: var(--green); background: #def5e8; }
+.gain-card .model-chip { color: var(--green); background: var(--ink); }
 .video-frame { flex: 1; min-height: 0; position: relative; background: #102219; overflow: hidden; }
 video { display: block; width: 100%; height: 100%; object-fit: contain; filter: brightness(.8); }
 .phase-overlay { position: absolute; right: 15px; top: 15px; list-style: none; margin: 0; padding: 10px 16px 10px 11px; background: #f6faf6ed; border: 1px solid #ffffffb5; border-radius: 13px; box-shadow: 0 5px 24px #132c2514; backdrop-filter: blur(10px); }
@@ -101,10 +104,10 @@ video { display: block; width: 100%; height: 100%; object-fit: contain; filter: 
 .phase-overlay rect { fill: #e6ece7; stroke: #c7d2ca; }
 .phase-overlay path { opacity: 0; stroke-width: 2.2; transition: opacity .15s; }
 .phase-overlay .complete { color: var(--green); }
-.phase-overlay .complete rect { fill: #d2efde; stroke: #a4d5bb; }
+.phase-overlay .complete rect { fill: color-mix(in srgb, var(--green) 12%, white); stroke: var(--green); }
 .phase-overlay .complete path { opacity: 1; }
 .completion-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
-.completion-badge { width: clamp(100px, 10vw, 184px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: #f4fff8ec; border: 2px solid #a3dcbc; box-shadow: 0 8px 38px #10372730; backdrop-filter: blur(7px); animation: completion-arrive .24s ease-out both; }
+.completion-badge { width: clamp(100px, 10vw, 184px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: #f4fff8ec; border: 2px solid var(--green); box-shadow: 0 8px 38px #10372730; backdrop-filter: blur(7px); animation: completion-arrive .24s ease-out both; }
 .completion-badge svg { width: 76%; height: 76%; fill: none; stroke: var(--green); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
 @keyframes completion-arrive { from { opacity: 0; transform: scale(.86); } to { opacity: 1; transform: scale(1); } }
 
@@ -170,10 +173,13 @@ h2 { margin: 0; font-size: clamp(18px, 1.35vw, 25px); line-height: 1.2; letter-s
   h1 { font-size: 27px; }
   .intro p { font-size: 14px; }
   .video-stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; gap: 14px; }
+  .video-card { grid-column: 1; }
   .video-frame { aspect-ratio: 16 / 9; flex: auto; }
   .video-card figcaption { padding: 11px 15px; min-height: 50px; }
   .model-name { font-size: 22px; }
   .model-name span { font-size: 14px; margin-left: 9px; }
+  .model-logo { width: 96px; }
+  .gain-card .model-name { gap: 10px; }
   .model-chip { font-size: 12px; }
   .phase-overlay { top: 10px; right: 10px; padding: 6px 11px 6px 7px; border-radius: 10px; }
   .phase-overlay li { font-size: 14px; gap: 6px; padding-block: 3px; }
