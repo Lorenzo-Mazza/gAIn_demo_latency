@@ -18,7 +18,7 @@
   color-scheme: light;
   --ink: #12382b;
   --muted: #687e72;
-  --green: #008a00;
+  --green: #00ff31;
   --standard: #7c8e85;
   --border: #dbe8e0;
   --mint: #e5f6ed;
@@ -142,6 +142,13 @@ h2 { margin: 0; font-size: clamp(18px, 1.35vw, 25px); line-height: 1.2; letter-s
 .chart-tooltip span { display: flex; justify-content: space-between; gap: 22px; margin-top: 3px; }
 .chart-tooltip .gain-value { color: var(--green); }
 .start-overlay { position: fixed; left: 50%; top: 42%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: #ffffffed; color: var(--green); border: 1px solid #a9d6bf; border-radius: 16px; font-weight: 700; font-size: 23px; box-shadow: 0 5px 30px #153d2530; z-index: 5; }
+h1, .gain-card .model-name span, .gain-card .model-chip, .speedup, .legend-gain, .chart-tooltip .gain-value, .phase-overlay .complete span, .start-overlay {
+  -webkit-text-stroke: .9px #000;
+  paint-order: stroke fill;
+}
+h1, .speedup strong { -webkit-text-stroke-width: 1.2px; }
+.legend-gain i { box-shadow: 0 0 0 1px #000; }
+.gain-curve-outline { stroke: #000; stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .error-message { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); margin: 0; padding: 12px 20px; border-radius: 12px; background: #fff; color: #713f38; border: 1px solid #e1c1b9; z-index: 6; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
@@ -200,6 +207,7 @@ h2 { margin: 0; font-size: clamp(18px, 1.35vw, 25px); line-height: 1.2; letter-s
   .chart-tick { font-size: 12px; }
   .chart-unit { font-size: 12px; }
   .latency-curve { stroke-width: 2.2; }
+  .gain-curve-outline { stroke-width: 3.8; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }

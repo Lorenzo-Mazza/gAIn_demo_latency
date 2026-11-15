@@ -215,6 +215,7 @@ function drawChart() {
     const path = samples.map((sample, index) => `${index ? 'L' : 'M'}${x(sample.step).toFixed(2)},${y(sample[metric]).toFixed(2)}`).join(' ');
     if (model === 'gain') {
       trace.append(svgElement('path', {d: `${path} L${x(samples.at(-1).step)},${y(0)} L${x(samples[0].step)},${y(0)} Z`, fill: 'url(#gain-area)'}));
+      trace.append(svgElement('path', {d: path, class: 'gain-curve-outline', 'aria-hidden': 'true'}));
     }
     trace.append(svgElement('path', {d: path, class: `latency-curve curve-${model}`, 'data-series': model}));
     chart.append(trace);
