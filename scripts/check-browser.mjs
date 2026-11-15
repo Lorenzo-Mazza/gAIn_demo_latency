@@ -24,7 +24,7 @@ try {
   await page.goto(origin, {waitUntil: 'domcontentloaded'});
   await page.waitForFunction(() => document.querySelector('#fp32-video').currentTime > 0.2);
   assert.equal(await page.locator('.latency-curve').count(), 2);
-  assert.deepEqual(await page.locator('.latency-curve').evaluateAll(items => items.map(path => getComputedStyle(path).stroke)), ['rgb(124, 142, 133)', 'rgb(0, 255, 49)']);
+  assert.deepEqual(await page.locator('.latency-curve').evaluateAll(items => items.map(path => getComputedStyle(path).stroke)), ['rgb(124, 142, 133)', 'rgb(0, 132, 102)']);
   assert.equal(await page.locator('#latency-chart circle').count(), 0);
   assert.equal(await page.locator('#speedup').textContent(), '3.1×');
   assert.equal(await page.locator('input[type="range"]').count(), 0, 'No progress bar');
